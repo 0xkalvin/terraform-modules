@@ -35,6 +35,7 @@ variable "username" {
 }
 
 variable "password" {
+  default = "dummy_password_that_will_change_after_creation"
   description = "The password for the instance master user"
 }
 

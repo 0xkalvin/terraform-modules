@@ -21,3 +21,7 @@ output "port" {
 output "username" {
   value = "${aws_db_instance.rds_instance.username}"
 }
+
+output "security_group_id" {
+  value = "${aws_security_group.rds_instance_security_group.id}"
+}
