@@ -9,5 +9,6 @@ data "template_file" "task_definition_template" {
     environment  = "${var.environment}"
     secrets      = "${var.secrets}"
     portMappings = "${var.port_mappings}"
+    aws_region   = "${var.region}"
   }
 }

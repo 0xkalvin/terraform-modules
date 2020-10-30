@@ -69,3 +69,7 @@ variable "port_mappings" {
   default     = ""
   description = "Task port mappings"
 }
+
+variable "region" {
+  description = "AWS region to create"
+}

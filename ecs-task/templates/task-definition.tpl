@@ -7,6 +7,14 @@
       "environment": [${environment}],
       "secrets": [${secrets}],
       "essential": true,
-      "portMappings": [${portMappings}]
+      "portMappings": [${portMappings}],
+      "logConfiguration": {
+         "logDriver": "awslogs",
+         "options": {
+            "awslogs-group": "/fargate-container/${name}",
+            "awslogs-region": "${aws_region}",
+            "awslogs-stream-prefix": "fargate-container"
+         }
+      }
    }
 ]
