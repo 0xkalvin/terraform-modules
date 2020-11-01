@@ -78,3 +78,8 @@ variable "task_role_arn" {
   default     = ""
   description = "The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services"
 }
+
+variable "app_type" {
+  default     = "server"
+  description = "Defines if task is a web server or a worker"
+}
