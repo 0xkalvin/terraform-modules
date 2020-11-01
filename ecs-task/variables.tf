@@ -73,3 +73,8 @@ variable "port_mappings" {
 variable "region" {
   description = "AWS region to create"
 }
+
+variable "task_role_arn" {
+  default     = ""
+  description = "The ARN of IAM role that allows your Amazon ECS container task to make calls to other AWS services"
+}

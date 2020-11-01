@@ -6,6 +6,7 @@ resource "aws_ecs_task_definition" "task_definition" {
   memory                   = "${var.memory}"
   requires_compatibilities = ["${var.launch_type}"]
   container_definitions    = "${data.template_file.task_definition_template.rendered}"
+  task_role_arn            = "${var.task_role_arn}"
 
   tags = {
     Application = "${var.name}"
@@ -27,6 +28,7 @@ resource "aws_ecs_service" "service" {
   network_configuration {
     subnets         = ["${var.subnets}"]
     security_groups = ["${var.security_groups}"]
+
     // TODO: work with private subnets
     assign_public_ip = true
   }
