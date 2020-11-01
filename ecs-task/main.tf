@@ -18,7 +18,8 @@ resource "aws_ecs_task_definition" "task_definition" {
   ]
 }
 
-resource "aws_ecs_service" "service" {
+resource "aws_ecs_service" "server_service" {
+  count           = "${var.app_type == "server" ? 1 : 0}"
   name            = "${var.name}"
   cluster         = "${var.cluster_id}"
   task_definition = "${aws_ecs_task_definition.task_definition.arn}"
@@ -37,6 +38,25 @@ resource "aws_ecs_service" "service" {
     target_group_arn = "${var.load_balancer_target_group_arn}"
     container_name   = "${var.name}"
     container_port   = "${var.container_port}"
+  }
+
+  depends_on = ["aws_ecs_task_definition.task_definition"]
+}
+
+resource "aws_ecs_service" "worker_service" {
+  count           = "${var.app_type == "worker" ? 1 : 0}"
+  name            = "${var.name}"
+  cluster         = "${var.cluster_id}"
+  task_definition = "${aws_ecs_task_definition.task_definition.arn}"
+  desired_count   = "${var.desired_count}"
+  launch_type     = "${var.launch_type}"
+
+  network_configuration {
+    subnets         = ["${var.subnets}"]
+    security_groups = ["${var.security_groups}"]
+
+    // TODO: work with private subnets
+    assign_public_ip = true
   }
 
   depends_on = ["aws_ecs_task_definition.task_definition"]
