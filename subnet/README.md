@@ -1,25 +1,13 @@
-# Usage
+# Subnet
+
+It creates one or many subnets. A subnet can be public or private.
+
+## Usage
 
 ```terraform
 
-data "aws_availability_zones" "availability_zones" {
-  state = "available"
-}
-
-data "aws_vpc" "vpc" {
-    default = true
-}
-
-data "aws_internet_gateway" "vpc_internet_gateway" {
-  filter {
-    name   = "attachment.vpc-id"
-    values = ["${data.aws_vpc.vpc.id}"]
-  }
-}
-
 module "private_subnet" {
-  source = "../subnet"
-
+  source             = "github.com/0xkalvin/terraform-modules//subnet"
   name               = "${var.environment}_private_subnet"
   environment        = "${var.environment}"
   vpc_id             = "${data.aws_vpc.vpc.id}"
@@ -28,8 +16,7 @@ module "private_subnet" {
 }
 
 module "public_subnet" {
-  source = "../subnet"
-
+  source              = "github.com/0xkalvin/terraform-modules//subnet"
   name                = "${var.environment}_public_subnet"
   environment         = "${var.environment}"
   vpc_id              = "${data.aws_vpc.vpc.id}"
@@ -38,5 +25,4 @@ module "public_subnet" {
   is_public           = true
   internet_gateway_id = "${data.aws_internet_gateway.vpc_internet_gateway.id}"
 }
-
 ```
